@@ -6,13 +6,13 @@
 /*   By: rluis-ya <rluis-ya@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:46:21 by rluis-ya          #+#    #+#             */
-/*   Updated: 2025/06/19 17:28:36 by rluis-ya         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:02:59 by rluis-ya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_format_specifier(char *c, va_list args)
+void	ft_format_specifier(va_list args, char *c)
 {
 	while (*(++c))
 	{
@@ -28,26 +28,36 @@ int	ft_format_specifier(char *c, va_list args)
 			return (ft_unsigned(va_arg(args, unsigned int)));
 		else if (*c == 'x' || *c == 'X')
 			return (ft_hexa(va_arg(args, unsigned int)));
-		else if (*c == '%')
-			return (ft_putchar('%'));
 		else
-			return (0);
+			putchar(*c);
 	}
+	return (1);
 }
+
+void	ft_putchar(const char c)
+{
+	write(1, c, 1);
+}
+
 int	ft_printf(const char *fmt, ...)
 {
 	va_list 		args;
-	unsigned char	*c;
 	uint8_t			flags;
+	uint8_t			state;
 
 	va_start(args, fmt)
-	c = fmt;
-	while (*c && *c != '%')
+	while (fmt && *fmt)
 	{
-		ft_putchar(*c);
-		c++;
+		if (*fmt != '%')
+			ft_putchar(fmt);
+		else
+			ft_format_specifier(args, fmt);
+		fmt++;
 	}
-	if (*c)
-		ft_format_specifier(c, args);
 	return (0);
+}
+
+int	main(void)
+{
+	printf("-------------TEST--------------\n");
 }
