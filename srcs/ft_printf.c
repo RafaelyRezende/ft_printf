@@ -6,7 +6,7 @@
 /*   By: rluis-ya <rluis-ya@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:46:21 by rluis-ya          #+#    #+#             */
-/*   Updated: 2025/06/20 14:56:33 by rluis-ya         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:09:23 by rluis-ya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 void	ft_decimal(va_list args, uint8_t flag)
 {
-	
+	return ;
 }
-uint8_t	ft_format_specifier(va_list args, char *c)
+
+uint8_t	ft_format_specifier(va_list args, char *c, uint8_t flag)
 {
 		if (*c == 'd' || *c == 'i')
-			return (ft_decimal(va_arg(args, int)));
+			return (ft_decimal(va_arg(args, int)), flag);
 		else if (*c == 'c')
-			return (ft_character(va_arg(args, unsigned int)));
+			return (ft_character(va_arg(args, unsigned int)), flag);
 		else if (*c == 'p')
-			return (ft_pointer(va_arg(args, unsigned long long)));
+			return (ft_pointer(va_arg(args, unsigned long long)), flag);
 		else if (*c == 's')
-			return (ft_string(va_arg(args, char *)));
+			return (ft_string(va_arg(args, char *)), flag);
 		else if (*c == 'u')
-			return (ft_unsigned(va_arg(args, unsigned int)));
+			return (ft_unsigned(va_arg(args, unsigned int)), flag);
 		else if (*c == 'x' || *c == 'X')
-			return (ft_hexa(va_arg(args, unsigned int)));
+			return (ft_hexa(va_arg(args, unsigned int)), flag);
 		else
 		{
 			putchar(*c);
@@ -37,7 +38,7 @@ uint8_t	ft_format_specifier(va_list args, char *c)
 		}
 }
 
-uint8_t	ft_check_flags(char **c)
+int	ft_check_flags(char **c)
 {
 	uint8_t	flag;
 
